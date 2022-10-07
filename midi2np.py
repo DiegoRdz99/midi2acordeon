@@ -30,5 +30,6 @@ def tiks2sec(tiks,tempo):
     return tempo*tiks/(480*1e6)
 
 if __name__ == '__main__':
-    ls = read_midi('test.mid')
+    ls = read_midi('./midis/soy_yo_quien_llega.mid')
+    print([l.note_num for l in ls])
     print([l.time for l in ls])

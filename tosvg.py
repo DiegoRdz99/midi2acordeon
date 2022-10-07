@@ -1,7 +1,7 @@
 import numpy as np
 
 class svg():
-    def __init__(self,width=80,height=280,ac_type='F'):
+    def __init__(self,width=80,height=280,ac_type='F',title='acc'):
         self.width = width # width of image
         self.height = height # height of image
         self.keys = [['']*10,['']*11,['']*10] # keys (circles)
@@ -9,6 +9,7 @@ class svg():
         self.keys_cl = [] # notes of keys when played closing
         self.keys_op = [] # notes of keys when played opening
         self.ac_type = ac_type # type of accordeon (either F, G, or E, acordón de Fa, Sol o Mi)
+        self.title = title # title of exports
         for i in range(3):
             d = 275 - n[i]*25 # Distance from first key to top frame
             for j in range(11):
@@ -20,7 +21,7 @@ class svg():
                     pass
 
     def reset_xml(self):
-        self.xml = [f'<?xml version="1.0" encoding="UTF-8"?>\n<svg width="{self.width}" height="{self.height}" viewBox="-{self.width/2} 0 {self.width} {self.height}">'] # svg header
+        self.xml = [f'<?xml version="1.0" encoding="UTF-8"?>\n<svg width="{self.width}" height="{self.height}" viewBox="-{self.width/2} 0 {self.width} {self.height}">\n<rect x="-{self.width/2}" width="100%" height="100%" fill="#000000" fill-opacity="0.6"/>'] # svg header
         for i in range(3): # reset initial conditions (all white)
             d = 275 - n[i]*25
             for j in range(11):
@@ -46,7 +47,7 @@ class svg():
         self.add_xml('</svg>') # svg footer
         self.export_string = '\n'.join(self.xml)
         self.reset_xml()
-        open(f'./__pycache__/acc-{num:04d}.svg','w').write(self.export_string)
+        open(f'./__pycache__/{self.title}-{num:04d}.svg','w').write(self.export_string)
         # return self.export
 
     def find_notes(self,note_nums): # find the key(s) which produce a certain pitch
@@ -132,4 +133,5 @@ def dist(keys:list):
 
 if __name__ == "__main__":
     test = svg()
-    print(test.find_notes([75,80]))
+    test.export(0)
+    # print(test.find_notes([75,80]))
