@@ -10,7 +10,6 @@ class event():
 def read_midi(midi_file):
     mid = mido.MidiFile(midi_file)
     for x in range(len(mid.tracks)):
-        # print(mid.tracks[x][0].name)
         if ('Akkordeon' in mid.tracks[x][0].name) or ('Accordion' in mid.tracks[x][0].name):
             T = x
         else:
