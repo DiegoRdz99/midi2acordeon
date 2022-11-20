@@ -10,8 +10,11 @@ class event():
 def read_midi(midi_file):
     mid = mido.MidiFile(midi_file)
     for x in range(len(mid.tracks)):
-        if 'Akkordeon' in mid.tracks[x][0].name:
+        # print(mid.tracks[x][0].name)
+        if ('Akkordeon' in mid.tracks[x][0].name) or ('Accordion' in mid.tracks[x][0].name):
             T = x
+        else:
+            print('No accordion found')
     tempo = mid.tracks[T][3].tempo
     lst = [message for message in mid.tracks[T] if message.type == 'note_on' and message.channel==T]
     lst = [event(msg.note,msg.velocity,msg.time) for msg in lst]

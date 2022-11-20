@@ -52,19 +52,23 @@ class svg():
 
     def find_notes(self,note_nums): # find the key(s) which produce a certain pitch
         indx = []
+        reps = set()
         for note in note_nums: # note pitch given as number
             for key in self.keys_op:
                 if note == key.pitch:
+                    reps.add(key.pitch)
                     indx.append((key.x,key.y))
-        if len(indx) >= len(note_nums): # If all notes are found, export, if not, try with open
+        if len(reps) >= len(note_nums): # If all notes are found, export, if not, try with open
             return indx,'out'
-        else:
+        else:   
             indx = []
+            reps = set()
             for note in note_nums:
                 for key in self.keys_cl:
                     if note == key.pitch:
+                        reps.add(key.pitch)
                         indx.append((key.x,key.y))
-            if len(indx) >= len(note_nums):
+            if len(reps) >= len(note_nums):
                 return indx,'in'
             else:
                 return 'Not possible to play'
