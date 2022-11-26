@@ -3,7 +3,7 @@ import os
 import subprocess
 
 midis = [fil[:-4] for fil in os.listdir(os.getcwd()+'/midis') if fil[-4:]=='.mid']
-midis = ['mi_mano_esta_llena']
+midis = ['ven_señor_no_tardes']
 # print(midis)
 for midi in midis:
     img_seq(midi_file=f'./midis/{midi}.mid',title=midi)
