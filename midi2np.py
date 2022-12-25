@@ -12,6 +12,8 @@ def read_midi(midi_file):
     for x in range(len(mid.tracks)):
         if ('Akkordeon' in mid.tracks[x][0].name) or ('Accordion' in mid.tracks[x][0].name):
             T = x
+            print('Accordion found, proceeding with export...')
+            break
         else:
             print('No accordion found')
     tempo = mid.tracks[T][3].tempo

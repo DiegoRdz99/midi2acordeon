@@ -4,10 +4,11 @@ from midi2np import *
 import cairosvg
 from math import ceil
 import ffmpeg
+import subprocess
 
-def img_seq(midi_file,title='video',fps=30):
+def img_seq(midi_file,title='video',fps=30,ac_type='F'):
     lst = read_midi(midi_file)
-    acc = svg(title=title)
+    acc = svg(title=title,ac_type=ac_type)
     time = [l.time for l in lst]
     # print(time)
     fn = ceil(time[-1])*fps
@@ -27,7 +28,9 @@ def img_seq(midi_file,title='video',fps=30):
                 acc.note_action(ins[0],ins[1],act=action)
         acc.export(i)
         cairosvg.svg2png(url=f'./__pycache__/{title}-{i:04d}.svg',write_to=f'./__pycache__/{title}-{i:04d}.png',output_width=800,output_height=2000)
+
     ffmpeg.input(f'./__pycache__/{title}*.png',pattern_type='glob', framerate=fps).output(f'./pre_videos/pre-{title}.mp4').run()
+    
     
 
 notes = ['C','D♭','D','E♭','E','F','G♭','G','A♭','A','B♭','B']
